@@ -1,4 +1,4 @@
-mntrun - mounts binds and overlays inside an ephemeral namespace
+mntrun - mounts binds and overlays inside an ephemeral mount namespace, and runs a command in it.
 
 Usage: `mntrun [-dhv] [-b source dest] [-o|-m lower upper workdir mountpoint] command`
 
