@@ -7,7 +7,6 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/wait.h>
-#include <linux/sched.h>
 #include "mount.c"
 
 #ifndef MNTRUN_VERSION
