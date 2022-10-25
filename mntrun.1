@@ -1,0 +1,65 @@
+.TH USERMNT 1 mntrun\-VERSION
+.SH NAME
+mntrun \- mounts binds and overlays inside an ephemeral namespace
+.SH SYNOPSIS
+.B mntrun
+.RB [ \-dhv ]
+.RB [ \-b
+.IR "source dest" ]
+.RB [[ \-o | \-m ]
+.IR "lower upper workdir mountpoint" ]
+.IR command
+.SH DESCRIPTION
+Exploits SUID to allow regular users to create overlays and binds mounts inside an ephemeral namespace, and to run
+.I command
+inside this new namespace. mntrun prints to stderr whenever an error occurs, but errors concerning mounts are better diagnosed using
+.BR dmesg (1).
+.TP
+These switches are mutually exclusive and must come right after 'mntrun':
+.TP
+.B \-d
+Enable debug logs.
+.TP
+.B \-h
+Display usage and quit.
+.TP
+.B \-v
+Display version and quit.
+.TP
+The following mount directives can appear several times:
+.TP
+.BI \-b " source dest"
+Bind: binds
+.I source
+to
+.IR dest .
+This directive will fail if the current user does't have the permission to write to
+.IR dest .
+.TP
+.BI \-o " lowers upper workdir mountpoint"
+Overlay: overlays
+.IR lowers ,
+a colon-separated list of read-only directories, and a writable directory
+.IR upper
+onto
+.IR mountpoint ,
+using
+.I workdir
+as the working directory. This directive will fail if the current user doesn't have the permission to write to upper, workdir or mountpoint .
+.TP
+.BI \-m " lowers upper workir mountpoint"
+Merge: like
+.BR \-o ,
+but
+.I mountpoint
+is prepended to
+.IR lowers .
+.TP
+As mentioned, mntrun must belong to root and have SUID permission to work for regular users.
+
+.SH AUTHORS
+B. Bergeron <benjamin.bergeron@protonmail.com>
+
+.SH SEE ALSO
+.BR mount (8),
+.BR dmesg (1)
